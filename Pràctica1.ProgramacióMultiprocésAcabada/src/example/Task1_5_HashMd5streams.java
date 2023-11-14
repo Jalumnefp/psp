@@ -1,0 +1,72 @@
+package example;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.lang.ProcessBuilder.Redirect;
+import java.util.Scanner;
+
+public class Task1_5_HashMd5streams {
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		
+		
+		String answ = "null";
+		
+		while (!answ.equals("")) {
+			System.out.print("md5txt> ");
+			answ = sc.nextLine();
+			
+			if (!answ.equals("")) {
+				try {
+					ProcessBuilder pb = new ProcessBuilder(new String[] {"md5sum", "-t"});
+					
+					Process p = pb.start();
+					
+					OutputStreamWriter osw = null;
+					BufferedWriter bw = null;
+					InputStreamReader isw = null;
+					BufferedReader br = null;
+					
+					try {
+						
+						osw = new OutputStreamWriter(p.getOutputStream());
+						bw = new BufferedWriter(osw);
+						
+						bw.write(answ);
+						
+					} catch (IOException e) {
+						e.printStackTrace();
+					} finally {
+						bw.close();
+						osw.close();
+					}
+					
+					try {
+						
+						isw = new InputStreamReader(p.getInputStream());
+						br = new BufferedReader(isw);
+						
+						System.out.println(br.readLine());
+					
+					} catch (IOException e) {
+						e.printStackTrace();
+					} finally {
+						br.close();
+						isw.close();
+					}
+					
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+		}
+		
+		sc.close();
+		
+	}
+}
