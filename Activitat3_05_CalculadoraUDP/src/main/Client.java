@@ -12,16 +12,14 @@ import java.util.Scanner;
 public class Client implements Runnable {
 	
 	private final Scanner sc = new Scanner(System.in);
-	private byte[] buffer = new byte[1024];
+	private byte[] buffer;
 	private final int portServidor;
-	private final int portClient;
 	private InetAddress ipv4Servidor;
 	
-	public Client(int portClient, int portServidor, String ipv4Servidor) {
+	public Client(int portServidor, String ipv4Servidor) {
 		System.out.println("Creat el Client");
 		
 		this.portServidor = portServidor;
-		this.portClient = portClient;
 		
 		try {
 			this.ipv4Servidor = Inet4Address.getByName(ipv4Servidor);
@@ -58,7 +56,6 @@ public class Client implements Runnable {
 	}
 	
 	private int[] askOperation() {
-		int[] values = new int[3];
 		System.out.print("Operació: \n  1. Sumar\n  2.Restar\n  3.Multiplicar\n  4.Dividir\nResposta: ");
 		int op = sc.nextInt();
 		

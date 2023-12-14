@@ -7,27 +7,19 @@ import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.nio.charset.StandardCharsets;
 
 public class Servidor implements Runnable {
 	
 	private byte[] buffer = new byte[1024];
 	private final int portServidor;
-	private final int portClient;
-	private InetAddress ipv4Servidor;
 
 	
-	public Servidor(int portClient, int portServidor, String ipv4Servidor) {
+	public Servidor(int portServidor) {
 		System.out.println("Creat el Servidor");
 		
 		this.portServidor = portServidor;
-		this.portClient = portClient;
 		
-		try {
-			this.ipv4Servidor = Inet4Address.getByName(ipv4Servidor);
-		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 	@Override
@@ -36,21 +28,19 @@ public class Servidor implements Runnable {
 		
 		String missatge = null;
 		
-		try {
-			DatagramSocket datagramSocket = new DatagramSocket(portServidor);
+		try (DatagramSocket datagramSocket = new DatagramSocket(portServidor)) {
+			
 			DatagramPacket datagramPacket = new DatagramPacket(buffer, buffer.length);
 			datagramSocket.receive(datagramPacket);
-			missatge = new String(datagramPacket.getData(), "UTF-8");
-			if (!datagramSocket.isClosed())
-				datagramSocket.close();
+			missatge = new String(datagramPacket.getData(), 0, datagramPacket.getLength(), StandardCharsets.UTF_8);
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}				
 		
 		String[] values = readOperation(missatge);
-		System.out.printf("%sOperació a calcular { %s %s %s = %s }\n", 
+		System.out.printf("%sOperació resultat { %s %s %s = %s }\n", 
 				Thread.currentThread().getName(), 
 				values[0], values[1], values[2], calcular(values))
 		;
@@ -58,8 +48,8 @@ public class Servidor implements Runnable {
 		
 	}
 	
-	private float calcular(String[] values) {
-		float result = 0;
+	private int calcular(String[] values) {
+		int result = 0;
 		int n1 = Integer.valueOf(values[0]);
 		String op = values[1];
 		int n2 = Integer.valueOf(values[2]);
