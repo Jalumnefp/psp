@@ -6,6 +6,8 @@ import java.net.DatagramSocket;
 import java.net.SocketException;
 import java.nio.charset.StandardCharsets;
 
+import es.jfp.elements.ChatPanel;
+
 public class ServidorChat implements Runnable {
 	
 	private byte[] buffer = new byte[1024];
@@ -33,8 +35,8 @@ public class ServidorChat implements Runnable {
 				e.printStackTrace();
 			}
 			
-			System.out.println(missatge);
-			this.buffer = new byte[1024];
+			ChatPanel.chatTextArea.append(missatge + '\n');
+
 		}
 		
 			
