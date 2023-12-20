@@ -36,6 +36,10 @@ public class ServidorChat implements Runnable {
 			}
 			
 			ChatPanel.chatTextArea.append(missatge + '\n');
+<<<<<<< HEAD
+=======
+
+>>>>>>> c8e77a8b8d93a5b65985c116e559ef1ba6d0107a
 		}
 		
 			

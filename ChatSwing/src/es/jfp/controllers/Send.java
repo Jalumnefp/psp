@@ -40,7 +40,8 @@ public class Send implements Runnable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("Sending");
+		System.out.println("Send!");
+		ChatPanel.messageTextField.setText("");
 		
 	}
 	

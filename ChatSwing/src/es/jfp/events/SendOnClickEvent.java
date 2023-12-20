@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import es.jfp.controllers.Send;
+import es.jfp.elements.ChatPanel;
 
 public class SendOnClickEvent implements ActionListener {
 	
@@ -13,8 +14,6 @@ public class SendOnClickEvent implements ActionListener {
 		Thread sendThread = new Thread(new Send());
 		
 		sendThread.start();
-		
-		System.out.println("ok");
 		
 		
 	}

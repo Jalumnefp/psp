@@ -12,7 +12,11 @@ public class AppFrame extends JFrame {
 	public AppFrame() {
 		
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+<<<<<<< HEAD
 		this.setTitle("Chat server");
+=======
+		this.setTitle("Chat servidor");
+>>>>>>> c8e77a8b8d93a5b65985c116e559ef1ba6d0107a
 		this.setResizable(false);
 		
 		configureBounds();
