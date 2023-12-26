@@ -11,8 +11,9 @@ public class Servidor implements Runnable {
 	
 	private Màquina màquina;
 	private int portServidor;
+	private int nclients;
 	
-	public Servidor(int portServidor) {
+	public Servidor(int portServidor, int clients) {		this.nclients = clients; System.out.println(clients);
 		this.màquina = new Màquina();
 		this.portServidor = portServidor; 
 	}
@@ -21,7 +22,9 @@ public class Servidor implements Runnable {
 	public void run() {
 		// TODO Auto-generated method stub
 		
-		while (this.màquina.getRefrescsLen() != 0) {
+		for (int i = 0; i < nclients; i++) {
+			
+			if (this.màquina.getRefrescsLen() == 0) { break; }
 			
 			String resposta = null;
 			
@@ -40,12 +43,9 @@ public class Servidor implements Runnable {
 				} else if (this.màquina.getRefrescsLen()<cant) {
 					resposta = "[Servidor] No quedan suficientes refrescos!";
 				} else {
-				
-				resposta = màquina.consumirRefrescos(cant);
-				
-				System.out.printf("%s Petición del cliente -> %s --- %s%n", Thread.currentThread().getName(), socketClient.getInetAddress(), socketClient.getPort());
-				System.out.printf("%s A la màquina le quedan: %s refrescos%n", Thread.currentThread().getName(), this.màquina.getRefrescsLen());
-				
+					resposta = màquina.consumirRefrescos(cant);
+					System.out.printf("%s Petición del cliente -> %s --- %s%n", Thread.currentThread().getName(), socketClient.getInetAddress(), socketClient.getPort());
+					System.out.printf("%s A la màquina le quedan: %s refrescos%n", Thread.currentThread().getName(), this.màquina.getRefrescsLen());
 				}
 				
 				dataOutputStream.writeUTF(resposta);
@@ -61,7 +61,5 @@ public class Servidor implements Runnable {
 		}
 				
 	}
-	
-	
 
 }

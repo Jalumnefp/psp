@@ -10,7 +10,6 @@ import java.util.Scanner;
 
 public class Client implements Runnable {
 	
-	private final Scanner sc = new Scanner(System.in);
 	private InetAddress ipDesti;
 	private int portServidor;
 	
@@ -28,7 +27,7 @@ public class Client implements Runnable {
 	public void run() {
 		// TODO Auto-generated method stub
 		System.out.printf("%s Cantitat de refrescos: ", Thread.currentThread().getName());
-		int cantitat = sc.nextInt();
+		int cantitat = Main.sc.nextInt();
 		
 		try (
 				Socket socketClient = new Socket(ipDesti, portServidor);
